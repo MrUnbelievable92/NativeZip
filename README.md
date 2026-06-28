@@ -47,6 +47,16 @@ NativeArrayUnsafeUtility.SetAtomicSafetyHandle(ref alias, NativeArrayUnsafeUtili
 #endif
 ```
 
+Once either data has been compressed or once a `ZipCompressed` has been deserialized, you have acceess to the properties...
+```csharp
+public readonly long DecompressedSizeInBytes
+```
+... and ...
+```csharp
+public readonly long CompressedSizeInBytes
+```
+... allowing you to allocate enough memory for the decompression process.
+
 To decompress a piece of data, use one of the following analogous decompression methods:
 ```csharp
 public JobHandle Decompress(void* dst, JobHandle inputDeps)
