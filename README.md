@@ -1,6 +1,6 @@
 # NativeZip
 A Unity.Burst compatible, auto-jobified implementation of the LZMA SDK.
-The resulting compression data uses a custom header and is currently not compatible with the 7z file format.
+Note: NativeZip does not produce .7z archives. It compresses data using its own binary format.
 
 # Motivation
 While several ZIP libraries are available for C#, they typically execute their compression and decompression logic as managed code and rely on external native DLLs for the performance-critical work. A Unity Burst-compatible implementation enables native execution speed while integrating seamlessly with the Unity Job System.
@@ -11,10 +11,10 @@ Finally, unlike most ZIP compression libraries, NativeZip exposes the full set o
 
 # Usage
 Within the root namespace `NativeZip` you have two types available to you:
-- `ZipCompressed`, as the `Unity.Collections.NativeContainer`, handling this libraries' API (requires manual memory management via `Dispose()` and `Dispose(JobHandle)`).
+- `ZipCompressed`, as the `Unity.Collections.NativeContainer`, handling this library's API (requires manual memory management via `Dispose()` and `Dispose(JobHandle)`).
 - `CompressionSettings` with detailed XML documentation for all of the available compression parameters
 
-To compress a file, first construct a new `ZipCompressed` instance with this constructor:
+To compress data, first Create a `ZipCompressed` instance:
 ```csharp
 public ZipCompressed(Allocator allocator, CompressionSettings settings = default, long initialCapacity = 128)
 ```
