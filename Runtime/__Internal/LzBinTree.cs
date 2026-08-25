@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using MaxMath;
+using MaxMath.CompilerServices;
 using Unity.Burst.CompilerServices;
 
 using static MaxMath.math;

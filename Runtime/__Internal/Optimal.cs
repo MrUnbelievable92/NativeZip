@@ -1,7 +1,8 @@
 using MaxMath;
-using MaxMath.Intrinsics;
+using MaxMath.CompilerServices;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+
 using static MaxMath.math;
 
 namespace NativeZip

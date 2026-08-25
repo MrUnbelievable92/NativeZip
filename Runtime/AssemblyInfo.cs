@@ -10,9 +10,9 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-[assembly: AssemblyVersion("1.0.0")]
-[assembly: AssemblyFileVersion("1.0.0")]
-[assembly: AssemblyInformationalVersion("1.0.0 Release")]
+[assembly: AssemblyVersion("1.0.1")]
+[assembly: AssemblyFileVersion("1.0.1")]
+[assembly: AssemblyInformationalVersion("1.0.1 Release")]
 
 // Style
 [assembly: SuppressMessage("Style", "IDE0034: Simplify 'default' expression", Justification = "Coding Guidelines")]
