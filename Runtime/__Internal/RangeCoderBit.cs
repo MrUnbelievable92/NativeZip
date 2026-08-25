@@ -1,9 +1,9 @@
 using System.Runtime.CompilerServices;
 using Unity.Burst.CompilerServices;
 using DevTools;
+using MaxMath.CompilerServices;
 
 using static MaxMath.math;
-using MaxMath.Intrinsics;
 
 namespace NativeZip
 {

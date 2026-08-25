@@ -6,7 +6,9 @@
         "MaxMath",
         "Unity.Burst",
         "Unity.Collections",
-        "Unity.Mathematics"
+        "Unity.Mathematics",
+        "MaxMath.CompilerServices",
+        "SIMD Algorithms"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

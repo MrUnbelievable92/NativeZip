@@ -1,7 +1,7 @@
 {
   "name": "com.mrunbelievable.nativezip",
   "displayName": "NativeZip",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "unity": "2021.3",
   "description": "An Burst compatible, auto-jobified implementation of the LZMA SDK",
    "keywords": [
@@ -9,7 +9,8 @@
   ],
    "dependencies": {
     "com.mrunbelievable.csharpdevtools": "1.0.11",
-    "com.mrunbelievable.maxmath": "3.0.0",
+    "com.mrunbelievable.maxmath": "3.1.0",
+    "com.mrunbelievable.simd_algorithms": "1.2.3",
     "com.unity.burst": "1.8.26",
 	"com.unity.collections": "1.2.4"
 	},

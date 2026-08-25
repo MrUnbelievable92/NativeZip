@@ -186,7 +186,7 @@ Assert.IsTrue(IsZipped);
 
             long size = CompressedSizeInBytes;
 
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 6; i++)
             {
                 stream.WriteByte((byte)(size >> (i * 8)));
             }
@@ -201,7 +201,7 @@ Assert.IsTrue(IsZipped);
         {
             long size = 0;
 
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 6; i++)
             {
                 size |= (long)stream.ReadByte() << (i * 8);
             }

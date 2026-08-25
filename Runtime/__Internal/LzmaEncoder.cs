@@ -8,6 +8,8 @@ using Unity.Jobs;
 using Unity.Jobs.LowLevel.Unsafe;
 using DevTools;
 using MaxMath;
+using MaxMath.CompilerServices;
+using SIMDAlgorithms;
 
 using static MaxMath.math;
 
@@ -19,9 +21,6 @@ namespace NativeZip
 		internal const uint kNumLenSpecSymbols = Base.kNumLowLenSymbols + Base.kNumMidLenSymbols;
 		internal const uint kIfinityPrice = 0x0FFF_FFFF;
 
-		public static long count0;
-		public static long count1;
-		public static long count2;
 		internal struct EncodingData
 		{
 			internal BinTree _matchFinder;
@@ -363,79 +362,10 @@ AtomicSafetyHandle.CheckWriteAndThrow(JobData.m_Safety);
 				return __Data->_optimumCurrentIndex;
 			}
 			
-			
-			[MethodImpl(MethodImplOptions.AggressiveInlining)]
-			private void MemSetInfinityPrice_INLINE(uint start, long count, bool unrolled = false)
-			{
-				uint* ptr = __Data->_optimumPrice + start;
-
-				if (unrolled)
-				{
-					while (count >= 32)
-					{
-						*((uint8*)ptr + 0) = kIfinityPrice;
-						*((uint8*)ptr + 1) = kIfinityPrice;
-						*((uint8*)ptr + 2) = kIfinityPrice;
-						*((uint8*)ptr + 3) = kIfinityPrice;
-
-						count -= 32;
-						ptr += 32;
-					}
-					
-					if (count >= 16)
-					{
-						*((uint8*)ptr + 0) = kIfinityPrice;
-						*((uint8*)ptr + 1) = kIfinityPrice;
-
-						count -= 16;
-						ptr += 16;
-					}
-					
-					if (count >= 8)
-					{
-						*((uint8*)ptr + 0) = kIfinityPrice;
-
-						count -= 8;
-						ptr += 8;
-					}
-				}
-				else
-				{
-					while (count >= 8)
-					{
-						*((uint8*)ptr + 0) = kIfinityPrice;
-
-						count -= 8;
-						ptr += 8;
-					}
-				}
-				
-				if (count >= 4)
-				{
-					*((uint4*)ptr + 0) = kIfinityPrice;
-
-					count -= 4;
-					ptr += 4;
-				}
-				
-				if (count >= 2)
-				{
-					*((uint2*)ptr + 0) = kIfinityPrice;
-
-					count -= 2;
-					ptr += 2;
-				}
-				
-				if (count != 0)
-				{
-					*ptr = kIfinityPrice;
-				}
-			}
-			
 			[MethodImpl(MethodImplOptions.NoInlining)]
 			private void MemSetInfinityPrice_NO_INLINE(uint start, long count)
 			{
-				MemSetInfinityPrice_INLINE(start, count, false);
+				Memory.MemSet<uint>(__Data->_optimumPrice + start, kIfinityPrice, count, false);
 			}
 			
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -443,7 +373,7 @@ AtomicSafetyHandle.CheckWriteAndThrow(JobData.m_Safety);
 			{
 				if (COMPILATION_OPTIONS.OPTIMIZE_FOR == OptimizeFor.Performance)
 				{
-					MemSetInfinityPrice_INLINE(start, count, unrolled);
+					Memory.MemSet<uint>(__Data->_optimumPrice + start, kIfinityPrice, count, true);
 				}
 				else
 				{
@@ -3305,7 +3235,7 @@ AtomicSafetyHandle.CheckWriteAndThrow(JobData.m_Safety);
 
 			if (settings.MatchFinder == MatchFinder.BT4)
 			{
-				int workersUsed = (JobsUtility.JobWorkerCount * 7) / 8;
+				int workersUsed = (JobsUtility.JobWorkerCount * 3) / 4;
 				JobHandle* initJobs = stackalloc JobHandle[2 + workersUsed];
 				initJobs[0] = new InitMiscJob			 { __Data = data, JobData = jobData }.Schedule(inputDeps);
 				initJobs[1] = new InitMatchFinderJob	 { __Data = data					}.Schedule(inputDeps);

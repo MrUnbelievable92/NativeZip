@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.Jobs;
+using SIMDAlgorithms;
 
 using static MaxMath.math;
 
@@ -34,7 +35,7 @@ namespace NativeZip
         private void Realloc(long length)
         {
             byte* newPtr = (byte*)UnsafeUtility.Malloc(length, 1, Allocator);
-            UnsafeUtility.MemCpy(newPtr, Ptr, Length);
+            Memory.MemCpy(newPtr, Ptr, Length);
             UnsafeUtility.Free(Ptr, Allocator);
             
             Ptr = newPtr;
